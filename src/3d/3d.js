@@ -30,15 +30,17 @@ function ModelLoader(props){
 }
 export default function Scene(){
     return(
-    <Canvas>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <OrbitControls />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
-        <ModelLoader position={[-1.2, 0, -10]} scale = {0.05}></ModelLoader>
-    </Canvas>
+    <div style={{ position: "relative", width: 800, height: 800 }}>
+      <Canvas>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <pointLight position={[-10, -10, -10]} />
+          <OrbitControls />
+          <Box position={[-1.2, 0, 0]} />
+          <Box position={[1.2, 0, 0]} />
+          <ModelLoader position={[-1.2, 0, 0]} scale = {0.005}></ModelLoader>
+      </Canvas>
+    </div>
     )
 }
 
