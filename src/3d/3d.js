@@ -1,3 +1,4 @@
+import React from 'react'
 import { useRef, useState } from 'react'
 import {OrbitControls } from "@react-three/drei";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
@@ -19,7 +20,7 @@ function Box(props) {
       onClick={(event) => click(!clicked)}
       onPointerOver={(event) => hover(true)}
       onPointerOut={(event) => hover(false)}>
-      <boxGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[9, 9, 9]} />
       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
     </mesh>
   )
@@ -30,15 +31,19 @@ function ModelLoader(props){
 }
 export default function Scene(){
     return(
-    <div style={{ position: "relative", width: 800, height: 800 }}>
+    <div style={{ position: "relative", width: "100%", height: 800 }}>
       <Canvas>
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />
           <OrbitControls />
-          <Box position={[-1.2, 0, 0]} />
-          <Box position={[1.2, 0, 0]} />
-          <ModelLoader position={[-1.2, 0, 0]} scale = {0.005}></ModelLoader>
+          {/* {/* <Box position={[-1.2, 0, 0]} /> */}
+          <Box position={[0, 0, 0]}  scale = {6}/>
+          <ModelLoader rotation = {[0,90,0]} scale = {0.002}></ModelLoader>
+          <mesh position={[0, 0.2, 0]} rotation = {[180,0,0]}>
+            <planeBufferGeometry attach="geometry"  args={[5, 5]}/>
+            <meshPhongMaterial attach="material" color="green" />
+          </mesh>
       </Canvas>
     </div>
     )
