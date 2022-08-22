@@ -1,9 +1,14 @@
-import React from 'react'
+import React, {Suspense} from 'react'
 import { useRef, useState } from 'react'
-import {OrbitControls, PerspectiveCamera, Stars, Plane, useTexture} from "@react-three/drei";
+import {OrbitControls, PerspectiveCamera, Stars, Plane, useTexture, Text3D} from "@react-three/drei";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import {useFrame, Canvas, useLoader } from '@react-three/fiber'
 import { DoubleSide, TextureLoader } from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useGLTF } from '@react-three/drei'
+import { Robot } from '../components/Robot';
+import * as THREE from "three";
+
 function Box(props) {
   // This reference gives us direct access to the THREE.Mesh object
   const ref = useRef()
@@ -28,22 +33,22 @@ function Box(props) {
   )
 }
 function ModelLoader(props){
-    const obj = useLoader(OBJLoader, 'StandPose.obj');
-    const props = useTexture({
-      map: 'PavingStones092_1K_Color.jpg',
-      displacementMap: 'PavingStones092_1K_Displacement.jpg',
-      normalMap: 'PavingStones092_1K_Normal.jpg',
-      roughnessMap: 'PavingStones092_1K_Roughness.jpg',
-      aoMap: 'PavingStones092_1K_AmbientOcclusion.jpg',
-    });
-    return (
-      <mesh>
-        <primitive {...props} object={obj} />
-        <meshStandardMaterial {...props} />
+    const gltf = useLoader(GLTFLoader, 'StandPose.gltf');
+    // const props = useTexture({
+    //   map: 'PavingStones092_1K_Color.jpg',
+    //   displacementMap: 'PavingStones092_1K_Displacement.jpg',
+    //   normalMap: 'PavingStones092_1K_Normal.jpg',
+    //   roughnessMap: 'PavingStones092_1K_Roughness.jpg',
+    //   aoMap: 'PavingStones092_1K_AmbientOcclusion.jpg',
+    // });
+    // return <primitive {...props} object={obj} />
+    return <primitive {...props} object={gltf.scene} scale = {0.001}/>
 
-      </mesh>
+      // <mesh>
+        {/* <meshStandardMaterial {...props} /> */}
+
+      // </mesh>
         
-    )
 }
 
 function CameraHelper(){
@@ -51,28 +56,50 @@ function CameraHelper(){
   return <cameraHelper args = {[camera]}/>;
 }
 export default function Scene(){
+    const [colorMap, normalMap, roughnessMap, metalnessMap, emissiveMap, aoMap] = useLoader(THREE.TextureLoader, [ 
+      './small-robot/textures/Body_albedo.jpg',
+      './small-robot/textures/Body_normal.jpg', 
+      './small-robot/textures/Body_roughness.jpg', 
+      './small-robot/textures/Body_metallic.jpg',
+      './small-robot/textures/Body_emissive.jpg',
+      './small-robot/textures/Body_AO.jpg'
+    ]) 
+    // const texture = useTexture('./Snow_002_DISP.png')
+
+    const texture = useLoader(THREE.TextureLoader, './Snow_002_DISP.png');
+    const normalTexture = useLoader(THREE.TextureLoader, './Snow_002_NORM.jpg');
+    const colorTexture = useLoader(THREE.TextureLoader, './Snow_002_COLOR.jpg');
+
     return(
-    <div style={{ position: "relative", width: "100%", height: 800 }}>
-      <Canvas  style={{ background: "black" }} >
+    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      <Canvas  shadows style={{ background: "black" }} >
           <ambientLight intensity={2} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> 
-          <pointLight position={[-10, -10, -10]} />
+          <directionalLight castShadow position={[3, 6, 10]} angle={0.15} /> 
+          {/* <pointLight castShadow intensity = {2} position={[0, 3, 4]} /> */}
           {/* {/* <Box position={[-1.2, 0, 0]} /> */}
           {/* <Box position={[0, 0, 0]}  scale = {6}/> */}
-          <ModelLoader rotation = {[0,90,0]} scale = {0.002}></ModelLoader>
-          {/* <mesh position={[0, 0, 0]}  rotation={[Math.PI / 2, 0, 0]}>
-            <planeBufferGeometry attach="geometry"  args={[5, 5]}/>
-            <meshStandardMaterial side = {DoubleSide} color="green" />
-          </mesh> */}
+          <Robot
+            colorMap={colorMap} 
+            normalMap={normalMap} 
+            roughnessMap={roughnessMap} 
+            metalnessMap={metalnessMap}
+            emissiveMap = {emissiveMap}
+            aoMap = {aoMap}
+          />
+          <Text3D font={'IBM Plex Sans_Bold.json'} position = {[0,3,4]} rotation-y = {Math.PI/2}>
+            Hello world!
+            <meshNormalMaterial />
+          </Text3D>
+          {/* <ModelLoader scale = {0.002}></ModelLoader> */}
           <Stars />
-          <Plane rotation-x={Math.PI / 2} args={[100, 100, 4, 4]}>
-            <meshBasicMaterial color="blue" wireframe />
+          <Plane receiveShadow position = {[0,1.6,0]} rotation-x={Math.PI / 2} args={[64, 64, 1024, 1024]}>
+            <meshStandardMaterial side = {DoubleSide} attach="material" color="white" displacementScale={4} displacementMap ={texture} map = {colorTexture} normalMap = {normalTexture} metalness={0.2} />
           </Plane>
-          <axesHelper />
+          {/* <axesHelper /> */}
           <OrbitControls />
-          <PerspectiveCamera position={[5, 3, 5]} makeDefault />
+          <PerspectiveCamera position={[9, 0.5, 0]} makeDefault />
 
-    </Canvas>
+      </Canvas>
     </div>
     )
 }
