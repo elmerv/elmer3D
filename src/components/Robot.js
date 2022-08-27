@@ -16,5 +16,5 @@ export const Robot = ({colorMap, normalMap, roughnessMap, metalnessMap, emissive
 
     console.log(materials);
     console.log(scene);
-    return <primitive rotation-y = {Math.PI} castShadow object={scene} scale = {0.003} />
+    return <primitive rotation-y = {Math.PI} object={scene} scale = {0.003} />
 };

@@ -1,9 +1,9 @@
 import React, {Suspense} from 'react'
 import { useRef, useState } from 'react'
-import {OrbitControls, PerspectiveCamera, Stars, Plane, useTexture, Text3D} from "@react-three/drei";
+import {OrbitControls, PerspectiveCamera, Stars, Plane, useTexture, Text3D, Shadow} from "@react-three/drei";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import {useFrame, Canvas, useLoader } from '@react-three/fiber'
-import { DoubleSide, TextureLoader } from 'three';
+import { BackSide, DoubleSide, FrontSide, ShadowMaterial, TextureLoader } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { useGLTF } from '@react-three/drei'
 import { Robot } from '../components/Robot';
@@ -28,7 +28,7 @@ function Box(props) {
       onPointerOut={(event) => hover(false)}>
   
       <boxGeometry args={[9, 9, 9]} />
-      <meshStandardMaterial side = {DoubleSide} color={hovered ? 'hotpink' : 'orange'} />
+      <meshPhongMaterial side = {DoubleSide} color={hovered ? 'hotpink' : 'orange'} />
     </mesh>
   )
 }
@@ -68,32 +68,36 @@ export default function Scene(){
 
     const texture = useLoader(THREE.TextureLoader, './Snow_002_DISP.png');
     const normalTexture = useLoader(THREE.TextureLoader, './Snow_002_NORM.jpg');
-    const colorTexture = useLoader(THREE.TextureLoader, './Snow_002_COLOR.jpg');
+    const colorTexture = useLoader(THREE.TextureLoader, './snowdirt_03.jpg');
 
     return(
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
-      <Canvas  shadows style={{ background: "black" }} >
-          <ambientLight intensity={2} />
-          <directionalLight castShadow position={[3, 6, 10]} angle={0.15} /> 
+    <div style={{ position: "relative", width: "100%", height: "90vh" }}>
+      <Canvas shadows = {true} style={{ background: "black" }} >
+          {/* <ambientLight intensity={1} /> */}
+          <directionalLight castShadow position={[8, 15, 5]} shadow-mapSize-height = {512} shadow-mapSize-width = {512} /> 
           {/* <pointLight castShadow intensity = {2} position={[0, 3, 4]} /> */}
           {/* {/* <Box position={[-1.2, 0, 0]} /> */}
-          {/* <Box position={[0, 0, 0]}  scale = {6}/> */}
-          <Robot
+          {/* <Box receiveShadow position={[0, 0, 0]}  scale = {6}/> */}
+
+          <mesh castShadow>          
+            <Robot
             colorMap={colorMap} 
             normalMap={normalMap} 
             roughnessMap={roughnessMap} 
             metalnessMap={metalnessMap}
             emissiveMap = {emissiveMap}
             aoMap = {aoMap}
-          />
-          <Text3D font={'IBM Plex Sans_Bold.json'} position = {[0,3,4]} rotation-y = {Math.PI/2}>
-            Hello world!
-            <meshNormalMaterial />
+            />
+          </mesh>
+
+          <Text3D castShadow font={'IBM Plex Sans_Bold.json'} position = {[0,3,4]} rotation-y = {Math.PI/2}>
+            Welcome!
+            <meshStandardMaterial />
           </Text3D>
           {/* <ModelLoader scale = {0.002}></ModelLoader> */}
           <Stars />
-          <Plane receiveShadow position = {[0,1.6,0]} rotation-x={Math.PI / 2} args={[64, 64, 1024, 1024]}>
-            <meshStandardMaterial side = {DoubleSide} attach="material" color="white" displacementScale={4} displacementMap ={texture} map = {colorTexture} normalMap = {normalTexture} metalness={0.2} />
+          <Plane position = {[0,1.6,0]} receiveShadow rotation-x={Math.PI / 2} args={[64, 64, 1024, 1024]}>
+            <meshStandardMaterial side = {BackSide} attach="material" color = "white" displacementScale={4} displacementMap ={texture} map = {colorTexture} normalMap = {normalTexture} metalness={0.2} />
           </Plane>
           {/* <axesHelper /> */}
           <OrbitControls />
