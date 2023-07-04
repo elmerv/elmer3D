@@ -119,15 +119,7 @@ export default function Scene() {
         <mesh position={[0, 0, 0]} castShadow>
           <Robot />
         </mesh>
-        <mesh
-          // rotation-x={(3 * Math.PI) / 2}
-          rotation-z={Math.PI / 2}
-          rotation-x={-Math.PI / 2}
-          position={[0, 70, 0]}
-          castShadow
-        >
-          <Face />
-        </mesh>
+        <Face />
         <Stars />
         <Plane
           position={[0, 1.6, 0]}
