@@ -2,53 +2,81 @@ import React, { useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
-import { ShaderMaterial } from "three";
+import { ShaderMaterial, MeshBasicMaterial, MeshStandardMaterial, MeshFaceMaterial } from "three";
 import { material, shader } from "gltf-pipeline/lib/ForEach";
 
 extend({ ShaderMaterial });
 
 export const Face = () => {
-
   const { scene, nodes } = useGLTF("3d_face/3d_face.gltf");
-  console.log(nodes);
-  // Assuming you have a single mesh with a single geometry in your scene
-  const mesh = scene.children.find((child) => child.isMesh);
-  const geometry = mesh.geometry;
 
-  // Access the UV attribute
-  const uvAttribute = geometry.getAttribute('uv');
-
-  // Check the UV coordinates
-  console.log(uvAttribute);
+  useFrame((state, delta) => {
+    shaderMaterial.uniforms.time.value += delta;
+  });
 
   const shaderMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      lineCount: { value: 7 },
+      lineCount: { value: 5 },
       lineWidth: { value: 0.9 },
-      lineColor: { value: new THREE.Vector3(72, 95, 190) }, // Adjust the color as needed
+      lineColor: { value: new THREE.Vector3(0.251, 0.878, 0.816) },
+      ambientLightColor: { value: new THREE.Vector3(1.0, 1.0, 1.0) },
+      directionalLightColor: { value: new THREE.Vector3(1.0, 1.0, 1.0) },
+      directionalLightDirection: { value: new THREE.Vector3(0.0, 1.0, 0.0) },
+      time: { value: 0 },
+      fadeDuration: { value: 20.0 }, // Adjust the fade duration as needed
     },
     vertexShader: `
+      varying vec3 vNormal;
+      varying vec3 vPosition;
       void main() {
+        vNormal = normalize(normalMatrix * normal);
+        vPosition = vec3(modelMatrix * vec4(position, 1.0));
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
     `,
     fragmentShader: `
-    uniform float lineCount;
-    uniform float lineWidth;
-    uniform vec3 lineColor;
-
-    void main() {
-      float lineInterval = 1.0 / lineCount;
-      float lineIndex = floor(gl_FragCoord.y / lineWidth);
-      float linePosition = mod(gl_FragCoord.y, lineWidth);
-
-      if (linePosition < lineInterval) {
-        gl_FragColor = vec4(lineColor, 1.0);
-      } else {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0); // Transparent
+      varying vec3 vNormal;
+      varying vec3 vPosition;
+      uniform float lineCount;
+      uniform float lineWidth;
+      uniform vec3 lineColor;
+      uniform vec3 ambientLightColor;
+      uniform vec3 directionalLightColor;
+      uniform vec3 directionalLightDirection;
+      uniform float time;
+      uniform float fadeDuration;
+  
+      void main() {
+        vec3 normal = normalize(vNormal);
+        vec3 lightDirection = normalize(directionalLightDirection);
+        float diffuse = max(dot(normal, lightDirection), 0.0);
+        vec3 lighting = ambientLightColor + diffuse * directionalLightColor;
+  
+        float lineInterval = 0.2 / lineCount;
+        float lineIndex = floor(gl_FragCoord.y / (lineWidth));
+        float linePosition = mod(gl_FragCoord.y, lineWidth);
+  
+        if (linePosition < lineInterval) {
+          float brightness = gl_FragCoord.y / (lineCount * lineWidth);
+          brightness = pow(brightness, 3.0); // Adjust the brightness curve
+          brightness = smoothstep(0.0, 1.0, brightness); // Apply smoothstep for a gradual transition
+  
+  
+          vec3 phongColor = lighting;
+          vec3 phongSpecularColor = vec3(1.0, 1.0, 1.0);
+          float phongShininess = 30.0;
+  
+          vec3 viewDirection = normalize(-vPosition);
+          vec3 reflectDirection = reflect(-lightDirection, normal);
+          float specular = pow(max(dot(reflectDirection, viewDirection), 0.0), phongShininess);
+  
+          gl_FragColor = vec4(lineColor * (phongColor + specular * phongSpecularColor) * brightness, 1.0);
+        } else {
+          // Apply a fallback color outside the desired interval
+          gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+        }
       }
-    }
-  `,
+    `,
   });
   
   return (
@@ -62,12 +90,7 @@ export const Face = () => {
       receiveShadow
       material={shaderMaterial}
     >
-      {/* <meshStandardMaterial
-        color="blue"
-        attach= "material"
-      /> */}
-      {/* <primitive object={scene} scale={0.8} /> */}
-
+      {/* <primitive object={group} /> */}
     </mesh>
   );
 };
