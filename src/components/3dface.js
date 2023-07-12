@@ -18,12 +18,13 @@ export const Face = () => {
     uniforms: {
       lineCount: { value: 5 },
       lineWidth: { value: 0.9 },
-      lineColor: { value: new THREE.Vector3(0.251, 0.878, 0.816) },
+      lineColor: { value: new THREE.Vector3(0.286, 0.392, 0.745) },
       ambientLightColor: { value: new THREE.Vector3(1.0, 1.0, 1.0) },
       directionalLightColor: { value: new THREE.Vector3(1.0, 1.0, 1.0) },
-      directionalLightDirection: { value: new THREE.Vector3(0.0, 1.0, 0.0) },
+      directionalLightDirection: { value: new THREE.Vector3(1.0, 1.0, 0.0) },
       time: { value: 0 },
-      fadeDuration: { value: 20.0 }, // Adjust the fade duration as needed
+      cascadeSpeed: { value: 5 },
+      cascadeHeight: { value: 10.0 },
     },
     vertexShader: `
       varying vec3 vNormal;
@@ -45,7 +46,9 @@ export const Face = () => {
       uniform vec3 directionalLightDirection;
       uniform float time;
       uniform float fadeDuration;
-  
+      uniform float cascadeSpeed;
+      uniform float cascadeHeight;
+
       void main() {
         vec3 normal = normalize(vNormal);
         vec3 lightDirection = normalize(directionalLightDirection);
@@ -56,6 +59,18 @@ export const Face = () => {
         float lineIndex = floor(gl_FragCoord.y / (lineWidth));
         float linePosition = mod(gl_FragCoord.y, lineWidth);
   
+        float cascadeStartY = mod(time * cascadeSpeed, cascadeHeight);
+        float cascadeEndY = cascadeStartY + cascadeHeight;
+
+        // Calculate the y-coordinate within the cascade region
+        float cascadeY = mod(gl_FragCoord.y + time * cascadeSpeed, cascadeHeight);
+
+        // Map the cascadeY to a brightness value
+        float brightness = 1.0 - smoothstep(0.0, 0.1, abs(cascadeY - cascadeHeight * 0.5));
+
+        // Check if the fragment is inside the cascade region
+        bool insideCascadeRegion = cascadeY >= cascadeStartY && cascadeY <= cascadeEndY;
+
         if (linePosition < lineInterval) {
           float brightness = gl_FragCoord.y / (lineCount * lineWidth);
           brightness = pow(brightness, 3.0); // Adjust the brightness curve
@@ -69,8 +84,8 @@ export const Face = () => {
           vec3 viewDirection = normalize(-vPosition);
           vec3 reflectDirection = reflect(-lightDirection, normal);
           float specular = pow(max(dot(reflectDirection, viewDirection), 0.0), phongShininess);
-  
-          gl_FragColor = vec4(lineColor * (phongColor + specular * phongSpecularColor) * brightness, 1.0);
+
+          gl_FragColor = vec4(lineColor * (phongColor + specular * phongSpecularColor) * (insideCascadeRegion ? brightness : brightness * 0.8), 1.0);
         } else {
           // Apply a fallback color outside the desired interval
           gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
@@ -84,7 +99,7 @@ export const Face = () => {
       // material={holographicMaterial}
       rotation-z={Math.PI / 2}
       rotation-x={-Math.PI / 2}
-      position={[0, 70, 0]}
+      position={[0, 100, 0]}
       geometry={nodes.Scene_07.geometry}
       castShadow
       receiveShadow
