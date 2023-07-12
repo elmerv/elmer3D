@@ -99,7 +99,7 @@ export const Face = () => {
       // material={holographicMaterial}
       rotation-z={Math.PI / 2}
       rotation-x={-Math.PI / 2}
-      position={[0, 100, 0]}
+      position={[75, 100, 0]}
       geometry={nodes.Scene_07.geometry}
       castShadow
       receiveShadow
