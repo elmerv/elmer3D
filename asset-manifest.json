@@ -1,15 +1,15 @@
 {
-  "main.css": "/elmer3D/static/css/main.8f2cff02.chunk.css",
-  "main.js": "/elmer3D/static/js/main.49ce7f6e.chunk.js",
-  "main.js.map": "/elmer3D/static/js/main.49ce7f6e.chunk.js.map",
-  "static/js/1.14b060c7.chunk.js": "/elmer3D/static/js/1.14b060c7.chunk.js",
-  "static/js/1.14b060c7.chunk.js.map": "/elmer3D/static/js/1.14b060c7.chunk.js.map",
-  "static/js/2.0bfa8006.chunk.js": "/elmer3D/static/js/2.0bfa8006.chunk.js",
-  "static/js/2.0bfa8006.chunk.js.map": "/elmer3D/static/js/2.0bfa8006.chunk.js.map",
-  "runtime~main.js": "/elmer3D/static/js/runtime~main.ad295adf.js",
-  "runtime~main.js.map": "/elmer3D/static/js/runtime~main.ad295adf.js.map",
-  "static/css/main.8f2cff02.chunk.css.map": "/elmer3D/static/css/main.8f2cff02.chunk.css.map",
-  "index.html": "/elmer3D/index.html",
-  "precache-manifest.c00454da390bbff619c39d9648e280c1.js": "/elmer3D/precache-manifest.c00454da390bbff619c39d9648e280c1.js",
-  "service-worker.js": "/elmer3D/service-worker.js"
+  "files": {
+    "main.css": "/elmer3D/static/css/main.073c9b0a.css",
+    "main.js": "/elmer3D/static/js/main.6f8d7436.js",
+    "static/js/787.86d19cee.chunk.js": "/elmer3D/static/js/787.86d19cee.chunk.js",
+    "index.html": "/elmer3D/index.html",
+    "main.073c9b0a.css.map": "/elmer3D/static/css/main.073c9b0a.css.map",
+    "main.6f8d7436.js.map": "/elmer3D/static/js/main.6f8d7436.js.map",
+    "787.86d19cee.chunk.js.map": "/elmer3D/static/js/787.86d19cee.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.6f8d7436.js"
+  ]
 }
