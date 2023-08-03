@@ -20,6 +20,7 @@ function CameraHelper() {
 }
 
 export default function Scene() {
+  
   const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
   const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
   const colorTexture = useLoader(THREE.TextureLoader, "./snowdirt_03.jpg");
