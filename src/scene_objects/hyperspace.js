@@ -112,6 +112,8 @@ export default function HyperSpace() {
     
          vec3 color = vec3(noise(pos));
          // Example: Add some color tint
+
+         
          color += vec3(0.0, 0.0, 0.8);
 
         gl_FragColor = vec4(color, 1.0);
