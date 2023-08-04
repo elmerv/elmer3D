@@ -2,7 +2,6 @@ import React from 'react'
 import './App.css';
 import Scene from './scene/scene'
 import { Canvas } from '@react-three/fiber'
-import Example from './tailwind/application-ui/headings/card-headings/with_avatar__meta__and_dropdown';
 import { EffectComposer, SSAO, Bloom, GodRays} from "@react-three/postprocessing";
 
 function App() {

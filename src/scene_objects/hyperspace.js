@@ -89,6 +89,25 @@ export default function HyperSpace() {
                 u.z);
     }
     
+    #define OCTAVES 6
+    float fbm (in vec2 st) {
+        // Initial values
+        float value = 0.0;
+        float amplitude = .5;
+        float frequency = 0.;
+        //
+        // Loop of octaves
+        for (int i = 0; i < OCTAVES; i++) {
+            value += amplitude * noise(vec3(st,1.0));
+            st *= 2.;
+            amplitude *= .5;
+        }
+        return value;
+    }
+
+
+
+
     void main() {
         // Time variable (can be provided as a uniform or computed based on the application)
         // Scrolling offset speed (adjust as needed)
@@ -103,18 +122,15 @@ export default function HyperSpace() {
     // vec2 direction = vec2(0.5, 0.0); // Move right, slower
     
         vec2 displacement = direction * u_time * scrollSpeed;
-        vec3 pos = vec3((vUv + displacement) * 15.560, u_time);
+        vec2 pos = (vUv + displacement) * 15.560;
     
         
         
         // Calculate the noise value based on the screen's horizontal coordinate and time
         // float noiseValue = noise(gl_FragCoord.xy * 0.01 + u_time * scrollSpeed);
     
-         vec3 color = vec3(noise(pos));
-         // Example: Add some color tint
-
-         
-         color += vec3(0.0, 0.0, 0.8);
+         vec3 color =  vec3(0.0, 0.0, 0.8);
+         color += fbm(pos*3.0);
 
         gl_FragColor = vec4(color, 1.0);
     }
