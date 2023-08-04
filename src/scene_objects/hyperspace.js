@@ -98,7 +98,7 @@ export default function HyperSpace() {
         //
         // Loop of octaves
         for (int i = 0; i < OCTAVES; i++) {
-            value += amplitude * noise(vec3(st,1.0));
+            value += amplitude * noise(vec3(st,0.02));
             st *= 2.;
             amplitude *= .5;
         }
@@ -113,24 +113,36 @@ export default function HyperSpace() {
         // Scrolling offset speed (adjust as needed)
         vec2 st = gl_FragCoord.xy/u_resolution.xy;
     
-        float scrollSpeed = 0.2; // Adjust to change the speed of scrolling
-        st.y*=scrollSpeed;
+
+
+        // Calculate the spiral angle based on time and the spiral speed
+        float angle = u_time * 0.01;
+    
+        // Calculate the x and y components of the direction vector using sine and cosine functions
+        float dx = cos(angle) * 0.2; // 0.2 is the initial x-component of the direction vector
+        float dy = sin(angle) * 0.2; // 0.2 is the initial y-component of the direction vector
+    
+        // Create the direction vector with the updated components
+        vec3 direction = vec3(dx, dy + -0.2, -0.3);
+
+
+
         // vec3 pos = vec3(st*5.560,u_time*0.604);
     
-        vec2 direction = vec2(0.0, -4.0); // Move right
+        // vec2 direction = vec2(0.00, -0.034); // Move right
     // vec2 direction = vec2(-1.0, 0.0); // Move left
     // vec2 direction = vec2(0.5, 0.0); // Move right, slower
     
-        vec2 displacement = direction * u_time * scrollSpeed;
-        vec2 pos = (vUv + displacement) * 15.560;
+        vec3 displacement = direction * u_time *3.0;
+        vec3 pos = (vec3(vUv,1.0) + displacement) *3.0;
     
         
         
         // Calculate the noise value based on the screen's horizontal coordinate and time
         // float noiseValue = noise(gl_FragCoord.xy * 0.01 + u_time * scrollSpeed);
     
-         vec3 color =  vec3(0.0, 0.0, 0.8);
-         color += fbm(pos*3.0);
+         vec3 color =  vec3(0.0, 0.0, 0.0);
+         color += fbm(pos.xy*3.0);
 
         gl_FragColor = vec4(color, 1.0);
     }
