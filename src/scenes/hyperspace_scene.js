@@ -14,17 +14,23 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Robot } from "../scene_objects/Robot";
 import { Face } from "../scene_objects/3dface";
 import HyperSpace from "../scene_objects/hyperspace";
+import { NabooSpaceShip } from "../scene_objects/nabooSpaceShip";
+
 function CameraHelper() {
   const camera = new PerspectiveCamera(60, 1, 1, 3);
   return <cameraHelper args={[camera]} />;
 }
 
-export default function Scene() {
+export default function HyperSpaceScene() {
   
-  const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
-  const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
-  const colorTexture = useLoader(THREE.TextureLoader, "./snowdirt_03.jpg");
-  console.log("what is happening?")
+  // const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
+  // const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
+  // const colorTexture = useLoader(THREE.TextureLoader, "./snowdirt_03.jpg");
+
+
+
+
+
   return (
     <>
       <directionalLight
@@ -34,19 +40,9 @@ export default function Scene() {
         shadow-mapSize-width={512}
       />
       <pointLight color="blue" intensity={3} position={[0, 0, 0]} />
-      <Text3D
-        castShadow
-        font={"IBM Plex Sans_Bold.json"}
-        position={[0, 3, 4]}
-        rotation-y={Math.PI / 2}
-      >
-        Welcome!
-        <meshStandardMaterial />
-      </Text3D>
-      <mesh position={[0, 0, 0]} castShadow>
-        <Robot />
-      </mesh>
-      <Face />
+      {/* <mesh position={[0, 0, 0]} castShadow>
+        <NabooSpaceShip />
+      </mesh>      */}
       {/* <Stars toneMapped={true} /> */}
       {/* <Plane
         position={[0, 1.6, 0]}

@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import * as THREE from "three";
-import { Cylinder } from "@react-three/drei";
+import { Cylinder, Sphere} from "@react-three/drei";
 import { extend, useFrame, useThree } from "@react-three/fiber";
-import { ShaderMaterial, CylinderGeometry } from "three";
+import { ShaderMaterial, CylinderGeometry, SphereGeometry } from "three";
 import { shader } from "gltf-pipeline/lib/ForEach";
 
-extend({ ShaderMaterial, CylinderGeometry });
+extend({ ShaderMaterial, CylinderGeometry, SphereGeometry });
 
 export default function HyperSpace() {
   const { size } = useThree();
@@ -26,7 +26,7 @@ export default function HyperSpace() {
     varying vec3 vPosition;
     varying vec2 vUv;
     void main() {
-      vUv = vec2(1.0 - (position.x + 20.0) / 40.0, (position.y + 600.0) / 1200.0);
+      vUv = vec2(position.x/20.0, position.y/100.0);
       vNormal = normalize(normalMatrix * normal);
       vPosition = vec3(modelMatrix * vec4(position, 1.0));
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
@@ -89,16 +89,16 @@ export default function HyperSpace() {
                 u.z);
     }
     
-    #define OCTAVES 6
+    #define OCTAVES 9
     float fbm (in vec2 st) {
         // Initial values
         float value = 0.0;
-        float amplitude = .5;
+        float amplitude = .2;
         float frequency = 0.;
         //
         // Loop of octaves
         for (int i = 0; i < OCTAVES; i++) {
-            value += amplitude * noise(vec3(st,0.02));
+            value += amplitude * noise(vec3(st,0.12));
             st *= 2.;
             amplitude *= .5;
         }
@@ -119,11 +119,11 @@ export default function HyperSpace() {
         float angle = u_time * 0.01;
     
         // Calculate the x and y components of the direction vector using sine and cosine functions
-        float dx = cos(angle) * 0.2; // 0.2 is the initial x-component of the direction vector
-        float dy = sin(angle) * 0.2; // 0.2 is the initial y-component of the direction vector
+        // float dx = cos(angle) * 0.2; // 0.2 is the initial x-component of the direction vector
+        // float dy = sin(angle) * 0.2; // 0.2 is the initial y-component of the direction vector
     
         // Create the direction vector with the updated components
-        vec3 direction = vec3(dx, dy + -0.2, -0.3);
+        vec3 direction = vec3(0.0, 0.0 + -0.2, 0.9);
 
 
 
@@ -134,15 +134,15 @@ export default function HyperSpace() {
     // vec2 direction = vec2(0.5, 0.0); // Move right, slower
     
         vec3 displacement = direction * u_time *3.0;
-        vec3 pos = (vec3(vUv,1.0) + displacement) *3.0;
+        vec3 pos = (vec3(vUv,1.0)) + displacement;
     
         
         
         // Calculate the noise value based on the screen's horizontal coordinate and time
         // float noiseValue = noise(gl_FragCoord.xy * 0.01 + u_time * scrollSpeed);
     
-         vec3 color =  vec3(0.0, 0.0, 0.0);
-         color += fbm(pos.xy*3.0);
+         vec3 color =  vec3(0.0, 0.2, 0.6);
+         color += fbm(pos.xy*8.00);
 
         gl_FragColor = vec4(color, 1.0);
     }
@@ -152,7 +152,7 @@ export default function HyperSpace() {
   // Create a custom geometry with adjusted UV coordinates to wrap the shader around the cylinder
   const radius = 20;
   const height = -1200;
-  const radialSegments = 32;
+  const radialSegments = 50;
   const heightSegments = 1; // Only one segment along the height
 
   const geometry = new THREE.CylinderGeometry(
@@ -172,15 +172,39 @@ export default function HyperSpace() {
     const angle = Math.atan2(z, x);
     uv.setXY(i, angle / (2 * Math.PI) + 0.5, position.getY(i) / height);
   }
-
+  // 0xff0000
   return (
-    <Cylinder
-      geometry={geometry}
-      position={[-100, 5, 0]}
-      rotation={[0, 0, (-Math.PI * 3) / 2]}
-      material={shaderMaterial}
-    >
-      {/* <meshPhysicalMaterial color="green" side={THREE.DoubleSide}/> */}
-    </Cylinder>
+    // <Cylinder
+    //   geometry={geometry}
+    //   position={[-100, 5, 0]}
+    //   rotation={[0, 0, (-Math.PI * 3) / 2]}
+    //   material={shaderMaterial}
+    // >
+    //   {/* <meshPhysicalMaterial color="green" side={THREE.DoubleSide}/> */}
+    // </Cylinder>
+
+
+    <group>
+      {/* Cylinder sides */}
+      <mesh material={shaderMaterial} rotation={[0, 0, (-Math.PI * 3) / 2]} >
+        <cylinderGeometry args={[radius, radius, height, radialSegments, heightSegments]} />
+      </mesh>
+
+      {/* Cylinder bottom end */}
+      <mesh position={[height/2.20, 0, 0]} rotation={[0, (-Math.PI*3) / 2, 0]}>
+        <circleGeometry args={[radius/1.1, radialSegments]} />
+        <meshStandardMaterial emissive="white" emissiveIntensity={2} toneMapped={false} />
+      </mesh>
+
+      {/* Cylinder top end */}
+      <mesh position={[-height/2.20, 0, 0]} rotation={[0, (Math.PI *3) / 2, 0]} >
+        <circleGeometry args={[radius, radialSegments]} />
+        <meshStandardMaterial emissive="white" emissiveIntensity={2} toneMapped={false} />
+      </mesh>
+    </group>
+
+
+
+
   );
 }

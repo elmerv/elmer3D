@@ -99,13 +99,12 @@ export const Face = () => {
   
   return (
     <mesh
-      rotation-z={Math.PI / 2}
-      rotation-x={-Math.PI / 2}
-      position={[2, 3, -8]}
+      position={[120, 80, 50]}
+      rotation-z={Math.PI / 1.8}
+      rotation-x={-Math.PI / 2.0}
       geometry={nodes.Scene_07.geometry}
       castShadow
       receiveShadow
-      scale={0.02}
       material={shaderMaterial}
     >
     </mesh>
