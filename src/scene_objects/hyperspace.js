@@ -7,7 +7,7 @@ import { shader } from "gltf-pipeline/lib/ForEach";
 
 extend({ ShaderMaterial, CylinderGeometry, SphereGeometry });
 
-export default function HyperSpace() {
+function HyperSpace() {
   const { size } = useThree();
 
   useFrame((state, delta) => {
@@ -208,3 +208,5 @@ export default function HyperSpace() {
 
   );
 }
+
+export default HyperSpace;

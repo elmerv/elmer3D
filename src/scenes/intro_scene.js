@@ -19,7 +19,7 @@ function CameraHelper() {
   return <cameraHelper args={[camera]} />;
 }
 
-export default function IntroScene() {
+function IntroScene() {
   const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
   const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
   const colorTexture = useLoader(THREE.TextureLoader, "./snowdirt_03.jpg");
@@ -94,3 +94,4 @@ export default function IntroScene() {
     </>
   );
 }
+export default IntroScene;

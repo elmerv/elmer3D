@@ -21,7 +21,7 @@ function CameraHelper() {
   return <cameraHelper args={[camera]} />;
 }
 
-export default function HyperSpaceScene() {
+function HyperSpaceScene() {
   
   // const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
   // const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
@@ -70,3 +70,4 @@ export default function HyperSpaceScene() {
     </>
   );
 }
+export default HyperSpaceScene;
