@@ -14,11 +14,6 @@ import { Robot } from "../scene_objects/Robot";
 import { Face } from "../scene_objects/3dface";
 import { EffectComposer, SSAO, Bloom } from "@react-three/postprocessing";
 
-function CameraHelper() {
-  const camera = new PerspectiveCamera(60, 1, 1, 3);
-  return <cameraHelper args={[camera]} />;
-}
-
 function IntroScene() {
   const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
   const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");

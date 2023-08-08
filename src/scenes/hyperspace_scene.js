@@ -16,11 +16,6 @@ import { Face } from "../scene_objects/3dface";
 import HyperSpace from "../scene_objects/hyperspace";
 import { NabooSpaceShip } from "../scene_objects/nabooSpaceShip";
 
-function CameraHelper() {
-  const camera = new PerspectiveCamera(60, 1, 1, 3);
-  return <cameraHelper args={[camera]} />;
-}
-
 function HyperSpaceScene() {
   
   // const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
