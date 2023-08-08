@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 import { ShaderMaterial } from "three";
-// import { useKeyPress } from '@react-three/drei';
 
 extend({ ShaderMaterial });
 

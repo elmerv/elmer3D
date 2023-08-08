@@ -5,9 +5,7 @@ import IntroScene from "./scenes/intro_scene";
 import { Canvas } from "@react-three/fiber";
 import {
   EffectComposer,
-  SSAO,
   Bloom,
-  GodRays,
 } from "@react-three/postprocessing";
 import SectionLabel from "./content-components/sectionLabel";
 import SectionComponent from "./content-components/sectionComponent";
@@ -53,19 +51,8 @@ function App() {
       <SectionHeaderImage></SectionHeaderImage>
       <SectionLabel content = "Projects" ></SectionLabel>
 
-      <SectionComponent children = {hyperSpaceContent} projectTitle = {projectInfo.hyperSpace.projectTitle} projectDescription = {projectInfo.hyperSpace.projectDescription}></SectionComponent>
-        {/* <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "50%",
-          height: "80%",
-          color: "blue"
-        }}
-      >
-        <Example/>
-      </div> */}
+      <SectionComponent content = {hyperSpaceContent} projectTitle = {projectInfo.hyperSpace.projectTitle} projectDescription = {projectInfo.hyperSpace.projectDescription}></SectionComponent>
+
     </>
   );
 }

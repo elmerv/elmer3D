@@ -17,15 +17,6 @@ import HyperSpace from "../scene_objects/hyperspace";
 import { NabooSpaceShip } from "../scene_objects/nabooSpaceShip";
 
 function HyperSpaceScene() {
-  
-  // const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
-  // const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
-  // const colorTexture = useLoader(THREE.TextureLoader, "./snowdirt_03.jpg");
-
-
-
-
-
   return (
     <>
       <directionalLight
@@ -35,28 +26,6 @@ function HyperSpaceScene() {
         shadow-mapSize-width={512}
       />
       <pointLight color="blue" intensity={3} position={[0, 0, 0]} />
-      {/* <mesh position={[0, 0, 0]} castShadow>
-        <NabooSpaceShip />
-      </mesh>      */}
-      {/* <Stars toneMapped={true} /> */}
-      {/* <Plane
-        position={[0, 1.6, 0]}
-        receiveShadow
-        rotation-x={Math.PI / 2}
-        args={[64, 64, 1024, 1024]}
-      >
-        <meshStandardMaterial
-          side={BackSide}
-          attach="material"
-          color="white"
-          displacementScale={4}
-          displacementMap={texture}
-          map={colorTexture}
-          normalMap={normalTexture}
-          metalness={0.2}
-          depthWrite={false}
-        />
-      </Plane> */}
       <axesHelper />
 
       <HyperSpace/>

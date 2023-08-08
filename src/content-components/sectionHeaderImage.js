@@ -1,3 +1,4 @@
+import React from "react"
 export default function SectionHeaderImage() {
     return (
       <div className="relative bg-indigo-200">

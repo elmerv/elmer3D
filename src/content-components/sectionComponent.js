@@ -1,3 +1,4 @@
+import React from "react";
 /* This example requires Tailwind CSS v2.0+ */
 const stats = [
   { label: "Founded", value: "2021" },
@@ -51,7 +52,7 @@ export default function SectionComponent(props) {
           </div>
           <div className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0 lg:max-w-none lg:py-20">
             {/* Testimonial card*/}
-            {props.children}
+            {props.content}
           </div>
         </div>
 

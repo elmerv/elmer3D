@@ -21,12 +21,6 @@ function IntroScene() {
 
   return (
     <>
-      {/* <Suspense fallback={null}>
-        <EffectComposer smaa>
-          <Bloom luminanceThreshold={0} luminanceSmoothing={0.9} height={200} />
-          <SSAO />
-        </EffectComposer>
-      </Suspense> */}
       <directionalLight
         castShadow
         position={[8, 15, 5]}
@@ -64,7 +58,6 @@ function IntroScene() {
         <Robot />
       </mesh>
       <Face />
-      {/* <Stars toneMapped={true} /> */}
       <Plane
         position={[0, 1.6, 0]}
         receiveShadow

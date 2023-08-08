@@ -149,12 +149,10 @@ function HyperSpace() {
         `,
   });
 
-  // Create a custom geometry with adjusted UV coordinates to wrap the shader around the cylinder
   const radius = 20;
   const height = -1200;
   const radialSegments = 50;
-  const heightSegments = 1; // Only one segment along the height
-
+  const heightSegments = 1; 
   const geometry = new THREE.CylinderGeometry(
     radius,
     radius,
@@ -172,31 +170,17 @@ function HyperSpace() {
     const angle = Math.atan2(z, x);
     uv.setXY(i, angle / (2 * Math.PI) + 0.5, position.getY(i) / height);
   }
-  // 0xff0000
   return (
-    // <Cylinder
-    //   geometry={geometry}
-    //   position={[-100, 5, 0]}
-    //   rotation={[0, 0, (-Math.PI * 3) / 2]}
-    //   material={shaderMaterial}
-    // >
-    //   {/* <meshPhysicalMaterial color="green" side={THREE.DoubleSide}/> */}
-    // </Cylinder>
-
-
     <group>
-      {/* Cylinder sides */}
       <mesh material={shaderMaterial} rotation={[0, 0, (-Math.PI * 3) / 2]} >
         <cylinderGeometry args={[radius, radius, height, radialSegments, heightSegments]} />
       </mesh>
 
-      {/* Cylinder bottom end */}
       <mesh position={[height/2.20, 0, 0]} rotation={[0, (-Math.PI*3) / 2, 0]}>
         <circleGeometry args={[radius/1.1, radialSegments]} />
         <meshStandardMaterial emissive="white" emissiveIntensity={2} toneMapped={false} />
       </mesh>
 
-      {/* Cylinder top end */}
       <mesh position={[-height/2.20, 0, 0]} rotation={[0, (Math.PI *3) / 2, 0]} >
         <circleGeometry args={[radius, radialSegments]} />
         <meshStandardMaterial emissive="white" emissiveIntensity={2} toneMapped={false} />
