@@ -27,7 +27,7 @@ export default function IntroScene() {
       <Text3D
         castShadow
         font={"IBM Plex Sans_Bold.json"}
-        position={[-2, 4, -1]}
+        position={[-8, 4, -1.5]}
         rotation-y={Math.PI / 2}
       >
         Hello! I'm Elmer,
@@ -36,7 +36,7 @@ export default function IntroScene() {
       <Text3D
         castShadow
         font={"IBM Plex Sans_Bold.json"}
-        position={[-2, 3, -1]}
+        position={[-8, 3, -1.5]}
         rotation-y={Math.PI / 2}
       >
         a recent CS new grad from
@@ -45,7 +45,7 @@ export default function IntroScene() {
       <Text3D
         castShadow
         font={"IBM Plex Sans_Bold.json"}
-        position={[-2, 2, -1]}
+        position={[-8, 2, -1.5]}
         rotation-y={Math.PI / 2}
       >
         UC Santa Cruz.
@@ -75,7 +75,7 @@ export default function IntroScene() {
       <axesHelper />
 
       <OrbitControls target={[0, 4, 0]} />
-      <PerspectiveCamera position={[9,1.5, 0]} fov={50} makeDefault />
+      <PerspectiveCamera position={[9,2, 0]} fov={50} makeDefault />
     </>
   );
 }
