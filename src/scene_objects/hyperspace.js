@@ -1,9 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import * as THREE from "three";
-import { Cylinder, Sphere} from "@react-three/drei";
 import { extend, useFrame, useThree } from "@react-three/fiber";
 import { ShaderMaterial, CylinderGeometry, SphereGeometry } from "three";
-import { shader } from "gltf-pipeline/lib/ForEach";
 
 extend({ ShaderMaterial, CylinderGeometry, SphereGeometry });
 

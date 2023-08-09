@@ -1,18 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 import * as THREE from "three";
 import {
   OrbitControls,
   PerspectiveCamera,
-  Stars,
-  Plane,
-  Text3D,
-  PointLight,
 } from "@react-three/drei";
-import { useLoader, extend } from "@react-three/fiber";
-import { BackSide } from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Robot } from "../scene_objects/Robot";
-import { Face } from "../scene_objects/3dface";
 import HyperSpace from "../scene_objects/hyperspace";
 import { NabooSpaceShip } from "../scene_objects/nabooSpaceShip";
 

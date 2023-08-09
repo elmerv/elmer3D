@@ -1,20 +1,17 @@
-import React, { Suspense } from "react";
+import React from "react";
 import * as THREE from "three";
 import {
   OrbitControls,
   PerspectiveCamera,
-  Stars,
   Plane,
   Text3D,
 } from "@react-three/drei";
-import { useLoader, extend } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
 import { BackSide } from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Robot } from "../scene_objects/Robot";
 import { Face } from "../scene_objects/3dface";
-import { EffectComposer, SSAO, Bloom } from "@react-three/postprocessing";
 
-function IntroScene() {
+export default function IntroScene() {
   const texture = useLoader(THREE.TextureLoader, "./Snow_002_DISP.png");
   const normalTexture = useLoader(THREE.TextureLoader, "./Snow_002_NORM.jpg");
   const colorTexture = useLoader(THREE.TextureLoader, "./snowdirt_03.jpg");
@@ -30,7 +27,7 @@ function IntroScene() {
       <Text3D
         castShadow
         font={"IBM Plex Sans_Bold.json"}
-        position={[-2, 4, -2]}
+        position={[-2, 4, -1]}
         rotation-y={Math.PI / 2}
       >
         Hello! I'm Elmer,
@@ -39,7 +36,7 @@ function IntroScene() {
       <Text3D
         castShadow
         font={"IBM Plex Sans_Bold.json"}
-        position={[-2, 3, -2]}
+        position={[-2, 3, -1]}
         rotation-y={Math.PI / 2}
       >
         a recent CS new grad from
@@ -48,7 +45,7 @@ function IntroScene() {
       <Text3D
         castShadow
         font={"IBM Plex Sans_Bold.json"}
-        position={[-2, 2, -2]}
+        position={[-2, 2, -1]}
         rotation-y={Math.PI / 2}
       >
         UC Santa Cruz.
@@ -82,4 +79,3 @@ function IntroScene() {
     </>
   );
 }
-export default IntroScene;
