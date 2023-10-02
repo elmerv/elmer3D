@@ -9,7 +9,7 @@ const stats = [
 
 export default function SectionComponent(props) {
   return (
-    <div className="relative bg-white py-16 sm:py-2">
+    <div className="dark:bg-black relative py-16 sm:py-2">
       <div className="lg:mx-auto lg:max-w-7xl">
         <div className="relative sm:py-16 lg:py-0">
           <div
@@ -26,7 +26,7 @@ export default function SectionComponent(props) {
         <div className="relative mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-0">
           {/* Content area */}
           <div className="pt-12 sm:pt-16 lg:pt-0">
-            <h2 className="text-3xl text-gray-900 font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl dark:text-white font-extrabold tracking-tight sm:text-4xl">
              {props.projectTitle}
             </h2>
             <div className="mt-6 text-gray-500 space-y-6">

@@ -2,11 +2,12 @@ import React from "react"
 export default function SectionHeaderImage() {
     return (
       <div className="relative bg-indigo-200">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0" style = {{ backgroundColor: 'black'}}>
           <img
             className="w-full h-full object-cover"
-            src="https://i.gifer.com/76YS.gif"
-            alt=""
+            src="./background.jpeg"
+            alt="No Image"
+            style={{opacity: '0.4'}}
           />
           <div className="absolute inset-0 bg-indigo-200 mix-blend-multiply" aria-hidden="true" />
         </div>
