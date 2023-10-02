@@ -8,11 +8,13 @@ import SectionLabel from "./content-components/sectionLabel";
 import SectionComponent from "./content-components/sectionComponent";
 import SectionHeaderImage from "./content-components/sectionHeaderImage";
 import SectionCGHw from "./content-components/sectionCGHw";
+// import navBar from "./content-components/navBar";
 
 function App() {
   const hyperSpaceContent = (
-    <div className="App" style={{ width: "100%", height: "40vh" }}>
-      <Canvas shadows={true} style={{ background: "black" }}>
+    <div className="App" style={{ width: "100%", height: "40vh"}}>
+      <Canvas shadows={true} style={{ background: "black", overflowY: 'hidden',
+      pointerEvents: 'auto' }}>
         <HyperSpaceScene></HyperSpaceScene>
         <EffectComposer>
           <Bloom
@@ -32,9 +34,9 @@ function App() {
         height="100%"
         src="https://www.youtube.com/embed/8M5LUVmH0e0"
         title="JetStreamer Video Demo - CSE  115A"
-        frameborder="0"
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
+        allowFullScreen
       ></iframe>
     </div>
   );
@@ -56,8 +58,9 @@ function App() {
   };
   return (
     <>
+      {/* <navBar></navBar> */}
       <div className="App" style={{ width: "100%", height: "75vh" }}>
-        <Canvas shadows={true} style={{ background: "black" }}>
+        <Canvas shadowMap={true} style={{ background: "black" }}>
           <IntroScene></IntroScene>
         </Canvas>
       </div>

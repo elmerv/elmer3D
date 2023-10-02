@@ -10,7 +10,8 @@ export const Face = () => {
   const { nodes } = useGLTF("3d_face/3d_face.gltf");
 
   useFrame((state, delta) => {
-    shaderMaterial.uniforms.time.value += delta;
+    shaderMaterial.uniforms.time.value += delta *100;
+    console.log(shaderMaterial.uniforms.time.value);
   });
 
   const shaderMaterial = new THREE.ShaderMaterial({
@@ -25,7 +26,7 @@ export const Face = () => {
       emissive: 0xBDD8FF,
       emissiveIntensity: 2,
       time: { value: 0 },
-      cascadeSpeed: { value: 10 },
+      cascadeSpeed: { value: 80.0 },
       cascadeHeight: { value: 10.0 },
     },
     vertexShader: `
