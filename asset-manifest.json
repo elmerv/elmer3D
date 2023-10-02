@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/elmer3D/static/css/main.72d1169d.css",
-    "main.js": "/elmer3D/static/js/main.10eed04c.js",
+    "main.css": "/elmer3D/static/css/main.4ad8f710.css",
+    "main.js": "/elmer3D/static/js/main.4c1e1b09.js",
     "static/js/787.86d19cee.chunk.js": "/elmer3D/static/js/787.86d19cee.chunk.js",
     "index.html": "/elmer3D/index.html",
-    "main.72d1169d.css.map": "/elmer3D/static/css/main.72d1169d.css.map",
-    "main.10eed04c.js.map": "/elmer3D/static/js/main.10eed04c.js.map",
+    "main.4ad8f710.css.map": "/elmer3D/static/css/main.4ad8f710.css.map",
+    "main.4c1e1b09.js.map": "/elmer3D/static/js/main.4c1e1b09.js.map",
     "787.86d19cee.chunk.js.map": "/elmer3D/static/js/787.86d19cee.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.72d1169d.css",
-    "static/js/main.10eed04c.js"
+    "static/css/main.4ad8f710.css",
+    "static/js/main.4c1e1b09.js"
   ]
 }
